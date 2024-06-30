@@ -14,6 +14,8 @@ const App = () => {
     fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${query}`)
       .then((response) => response.json())
       .then((data) => setProducts(data.results));
+      setProducts(data.results);
+      setSelectedProduct(null);
   };
 
   const handleAddToCart = (product) => {
@@ -43,11 +45,15 @@ const App = () => {
     setCart(cart.filter((item) => item.id !== productId));
   };
 
+  const handleHomeClick = () => {
+    setSelectedProduct(null); // Ensure the selected product is cleared
+  };
+
   return (
     <Router>
       <div>
         <nav>
-          <Link to="/">Inicio</Link>
+          <Link to="/" onClick={handleHomeClick}>Inicio</Link>
           <Link to="/cart">Carrito</Link>
         </nav>
 
