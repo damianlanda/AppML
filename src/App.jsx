@@ -53,7 +53,10 @@ const App = () => {
     <Router>
       <div>
         <nav>
-          <Link to="/" onClick={handleHomeClick}>Inicio</Link>
+          <Link to="/" onClick={handleHomeClick}>
+            <img src="/images/logo.webp" alt="Logo" />
+          </Link>
+          <SearchBar onSearch={handleSearch} />
           <Link to="/cart">Carrito</Link>
         </nav>
 
@@ -62,7 +65,6 @@ const App = () => {
             path="/"
             element={
               <>
-                <SearchBar onSearch={handleSearch} />
                 {selectedProduct ? (
                   <ProductDetails
                     productId={selectedProduct}
