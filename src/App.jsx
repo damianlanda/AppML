@@ -51,41 +51,45 @@ const App = () => {
 
   return (
     <Router>
-      <div>
-        <nav>
-          <Link to="/" onClick={handleHomeClick}>Inicio</Link>
-          <Link to="/cart">Carrito</Link>
-        </nav>
+      <header class = "header">
+        <div>
+          <nav class = "nav">
+            <Link to="/" onClick={handleHomeClick}>
+              <img class = "logo" src = "/images/logo.webp" alt="Logo" />
+            </Link>
+            <SearchBar onSearch={handleSearch} />
+            <Link to="/cart">Carrito</Link>
+          </nav>
 
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                <SearchBar onSearch={handleSearch} />
-                {selectedProduct ? (
-                  <ProductDetails
-                    productId={selectedProduct}
-                    onAddToCart={handleAddToCart}
-                  />
-                ) : (
-                  <ProductList products={products} onSelect={setSelectedProduct} />
-                )}
-              </>
-            }
-          />
-          <Route
-            path="/cart"
-            element={
-              <Cart
-                cart={cart}
-                onUpdateQuantity={handleUpdateQuantity}
-                onRemove={handleRemove}
-              />
-            }
-          />
-        </Routes>
-      </div>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <>
+                  {selectedProduct ? (
+                    <ProductDetails
+                      productId={selectedProduct}
+                      onAddToCart={handleAddToCart}
+                    />
+                  ) : (
+                    <ProductList products={products} onSelect={setSelectedProduct} />
+                  )}
+                </>
+              }
+            />
+            <Route
+              path="/cart"
+              element={
+                <Cart
+                  cart={cart}
+                  onUpdateQuantity={handleUpdateQuantity}
+                  onRemove={handleRemove}
+                />
+              }
+            />
+          </Routes>
+        </div>
+      </header>
     </Router>
   );
 };
