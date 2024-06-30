@@ -7,13 +7,20 @@ const Buscador = ({ onSearch }) => {
     onSearch(query);
   };
 
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
+
   return (
     <div>
       <input 
-        type="text" 
-        value={query} 
-        onChange={(e) => setQuery(e.target.value)} 
-        placeholder="Buscar productos..." 
+        type="text"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
+        onKeyPress={handleKeyPress}
+        placeholder="Buscar productos..."
       />
       <button onClick={handleSearch}>Buscar</button>
     </div>
