@@ -1,21 +1,8 @@
-/*import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-
-function App() {
-  const [count, setCount] = useState(0)
-
-  return 
-}
-
-export default App
-*/
-
 import React, { useState } from 'react';
-import Buscador from './components/Buscador';
-import Productos from './components/Productos';
-import Detalle from './components/Detalle';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import SearchBar from './components/Buscador';
+import ProductList from './components/Productos';
+import ProductDetails from './components/Detalle';
 import Cart from './components/Carrito';
 
 const App = () => {
@@ -57,24 +44,44 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Buscador onSearch={handleSearch} />
-      {selectedProduct ? (
-        <Detalle
-          productId={selectedProduct}
-          onAddToCart={handleAddToCart}
-        />
-      ) : (
-        <Productos products={products} onSelect={setSelectedProduct} />
-      )}
-      <Cart
-        cart={cart}
-        onUpdateQuantity={handleUpdateQuantity}
-        onRemove={handleRemove}
-      />
-    </div>
+    <Router>
+      <div>
+        <nav>
+          <Link to="/">Inicio</Link>
+          <Link to="/cart">Carrito</Link>
+        </nav>
+
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <>
+                <SearchBar onSearch={handleSearch} />
+                {selectedProduct ? (
+                  <ProductDetails
+                    productId={selectedProduct}
+                    onAddToCart={handleAddToCart}
+                  />
+                ) : (
+                  <ProductList products={products} onSelect={setSelectedProduct} />
+                )}
+              </>
+            }
+          />
+          <Route
+            path="/cart"
+            element={
+              <Cart
+                cart={cart}
+                onUpdateQuantity={handleUpdateQuantity}
+                onRemove={handleRemove}
+              />
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 };
 
 export default App;
-
