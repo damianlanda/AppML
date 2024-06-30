@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import SearchBar from './components/Buscador';
-import ProductList from './components/Productos';
-import ProductDetails from './components/Detalle';
+import Buscador from './components/Buscador';
+import Productos from './components/Productos';
+import Detalle from './components/Detalle';
 import Cart from './components/Carrito';
 
 const App = () => {
@@ -13,11 +13,12 @@ const App = () => {
   const handleSearch = (query) => {
     fetch(`https://api.mercadolibre.com/sites/MLA/search?q=${query}`)
       .then((response) => response.json())
-      .then((data) => setProducts(data.results));
-      setProducts(data.results);
-      setSelectedProduct(null);
+      .then((data) => {
+        setProducts(data.results);
+        setSelectedProduct(null); // Limpiar el producto seleccionado
+      });
   };
-
+  
   const handleAddToCart = (product) => {
     const existingProduct = cart.find((item) => item.id === product.id);
     if (existingProduct) {
@@ -57,7 +58,7 @@ const App = () => {
             <Link to="/" onClick={handleHomeClick}>
               <img class = "logo" src = "/images/logo.webp" alt="Logo" />
             </Link>
-            <SearchBar onSearch={handleSearch} />
+            <Buscador onSearch={handleSearch} />
             <Link to="/cart">Carrito</Link>
           </nav>
 
@@ -67,12 +68,15 @@ const App = () => {
               element={
                 <>
                   {selectedProduct ? (
-                    <ProductDetails
+                    <Detalle
                       productId={selectedProduct}
                       onAddToCart={handleAddToCart}
                     />
                   ) : (
-                    <ProductList products={products} onSelect={setSelectedProduct} />
+                    <Productos 
+                      products={products} 
+                      onSelect={setSelectedProduct} 
+                    />
                   )}
                 </>
               }

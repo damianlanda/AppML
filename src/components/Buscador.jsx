@@ -4,7 +4,12 @@ const Buscador = ({ onSearch }) => {
   const [query, setQuery] = useState('');
 
   const handleSearch = () => {
-    onSearch(query);
+//    onSearch(query);
+    if (query.trim()) {
+      onSearch(query);
+      setQuery(''); 
+    }
+
   };
 
   const handleKeyPress = (e) => {
@@ -28,3 +33,4 @@ const Buscador = ({ onSearch }) => {
 };
 
 export default Buscador;
+
