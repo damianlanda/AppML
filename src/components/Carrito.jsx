@@ -12,6 +12,9 @@ const Cart = ({ cart, onUpdateQuantity, onRemove }) => {
 
     // Función para actualizar la cantidad de un producto en el carrito
     const handleUpdateQuantity = (id, newQuantity) => {
+        if (newQuantity < 1) {
+            return;
+        }
         const updatedCartItems = cartItems.map(item => {
             if (item.id === id) {
                 return { ...item, quantity: newQuantity };
@@ -21,6 +24,7 @@ const Cart = ({ cart, onUpdateQuantity, onRemove }) => {
         setCartItems(updatedCartItems);
         guardarProductoLocalStorage(updatedCartItems);
     };
+    
 
     // Función para eliminar un producto del carrito
     const handleRemove = (id) => {
@@ -58,7 +62,12 @@ const Cart = ({ cart, onUpdateQuantity, onRemove }) => {
                             <img src={item.thumbnail} alt={item.title} style={{ width: '50px', height: '50px' }} />
                             <h3>{item.title}</h3>
                             <p>${item.price} x {item.quantity}</p>
-                            <button onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}>-</button>
+                            <button 
+                                onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)} 
+                                disabled={item.quantity === 1}
+                            >
+                                -
+                            </button>
                             <button onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}>+</button>
                             <button onClick={() => handleRemove(item.id)}>Eliminar</button>
                         </div>
@@ -69,6 +78,7 @@ const Cart = ({ cart, onUpdateQuantity, onRemove }) => {
             )}
         </div>
     );
+    
 };
 
 export default Cart;
