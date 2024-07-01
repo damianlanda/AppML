@@ -1,3 +1,7 @@
 node_modules
 node_modules/.vite/deps/_metadata.json
 *.json
+*.md
+*.md
+*.json
+*.md
